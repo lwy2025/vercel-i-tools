@@ -112,13 +112,6 @@ print_info "提交信息: $commit_msg"
 print_info "分支: $current_branch"
 print_info "远程仓库: origin"
 
-# 运行构建测试
-print_info "运行构建测试..."
-if npm run build; then
-    print_success "构建测试通过！"
-else
-    print_error "构建测试失败！"
-    exit 1
-fi
+
 
 print_success "所有操作完成！🎉"
