@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# 一键推送脚本 - i-tools项目
+# 一键推送脚本 - i-tools项目 (支持SSH密钥)
 # 作者: 自动生成
-# 功能: 添加所有更改、提交并推送到远程仓库
+# 功能: 自动切换到main分支、提交并使用SSH密钥推送到远程仓库
 
 set -e  # 遇到错误时退出
 
@@ -89,57 +89,21 @@ git add .
 print_info "提交更改..."
 git commit -m "$commit_msg"
 
-# 分支检查和处理
-if [ "$current_branch" != "main" ]; then
-    print_warning "当前分支是 '$current_branch'，只有main分支才能推送。"
-    print_info "将自动切换到main分支并合并当前更改。"
-    
-    # 检查是否有未提交的更改
-    if ! git diff --quiet || ! git diff --cached --quiet; then
-        read -p "是否将 '$current_branch' 分支的更改合并到main分支？(y/N): " merge_changes
-        if [[ $merge_changes =~ ^[Yy]$ ]]; then
-            print_info "暂存当前分支的更改..."
-            git add .
-            git commit -m "临时提交: 从 $current_branch 分支的更改" || true
-            
-            print_info "切换到main分支..."
-            git checkout main
-            
-            print_info "合并 $current_branch 分支到main..."
-            git merge "$current_branch" --no-ff -m "合并分支: $current_branch -> main"
-            
-            print_info "删除临时提交..."
-            git reset --soft HEAD~2  # 撤销临时提交和合并提交
-            git reset HEAD  # 取消暂存
-        else
-            print_info "切换到main分支..."
-            # 暂存当前更改
-            if ! git diff --quiet || ! git diff --cached --quiet; then
-                git stash push -m "deploy.sh自动暂存-$(date +%s)"
-            fi
-            git checkout main
-            
-            # 恢复暂存的更改
-            if git stash list | head -1 | grep -q "deploy.sh自动暂存"; then
-                print_info "恢复暂存的更改..."
-                git stash pop
-            fi
-        fi
-    else
-        print_info "切换到main分支..."
-        git checkout main
-    fi
-    
-    print_success "已切换到main分支"
-    current_branch="main"
+# 检查并设置SSH远程地址（如果需要）
+remote_url=$(git remote get-url origin 2>/dev/null)
+if [[ "$remote_url" == https://github.com/* ]]; then
+    # 转换为SSH格式
+    ssh_url=$(echo "$remote_url" | sed 's|https://github.com/|git@github.com:|')
+    print_info "设置SSH远程地址: $ssh_url"
+    git remote set-url origin "$ssh_url"
 fi
 
 # 拉取最新代码（确保本地是最新的）
-print_info "拉取远程main分支最新代码..."
+print_info "拉取远程main分支最新代码（使用SSH）..."
 git pull origin main --rebase
 
-# 推送到远程仓库
-print_info "推送到远程仓库 ($current_branch)..."
+# 推送到远程仓库（使用SSH密钥）
+print_info "使用SSH密钥推送到远程仓库 ($current_branch)..."
 git push origin "$current_branch"
 
 print_success "推送完成！"
