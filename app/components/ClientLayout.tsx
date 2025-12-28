@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { Github, Home } from 'lucide-react'
+import { PawPrint, Home } from 'lucide-react'
 
 export default function ClientLayout({
   children,
@@ -16,7 +16,7 @@ export default function ClientLayout({
           <div className="mr-8 hidden md:flex">
             <Link href="/" className="mr-6 flex items-center space-x-2 transition-colors hover:text-primary/90">
               <span className="hidden font-bold sm:inline-block text-xl tracking-tight">
-                爱拓工具箱
+                xxw工具箱
               </span>
             </Link>
           </div>
@@ -32,15 +32,15 @@ export default function ClientLayout({
                 <span>首页</span>
               </Link>
               <Link
-                href="https://github.com/iLay1678/i-tools"
+                href="https://bearxwu.sbs"
                 target="_blank"
                 rel="noreferrer"
                 className="transition-colors hover:text-primary text-foreground/80 flex items-center gap-2 group"
               >
                  <div className="p-1 rounded-md group-hover:bg-accent">
-                  <Github className="h-4 w-4" />
+                  <PawPrint className="h-4 w-4" />
                 </div>
-                <span>GitHub</span>
+                <span>BearXwu</span>
               </Link>
             </nav>
           </div>
@@ -56,7 +56,7 @@ export default function ClientLayout({
       <footer className="py-6 border-t bg-muted/30">
         <div className="container max-w-screen-xl mx-auto px-4 flex flex-col items-center justify-center gap-4">
           <p className="text-balance text-center text-sm leading-loose text-muted-foreground">
-            版权所有 © {new Date().getFullYear()} 爱拓工具箱
+            版权所有 © {new Date().getFullYear()} xxw工具箱
           </p>
         </div>
       </footer>

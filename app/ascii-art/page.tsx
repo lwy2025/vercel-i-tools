@@ -41,7 +41,7 @@ figlet.parseFont("Big", bigFont);
 const FONTS = ["Standard", "Ghost", "Slant", "Bubble", "Banner", "Big"];
 
 export default function AsciiArtPage() {
-  const [text, setText] = useState("i-Tools");
+  const [text, setText] = useState("xxw-Tools");
   const [font, setFont] = useState("Standard");
   const [output, setOutput] = useState("");
 

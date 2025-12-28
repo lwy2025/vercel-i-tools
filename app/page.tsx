@@ -542,7 +542,7 @@ export default function HomePage() {
       <section className="flex flex-col items-center pt-8 pb-4 text-center space-y-4 md:pt-12 lg:pt-16 animate-in fade-in slide-in-from-bottom-5 duration-700">
         <div className="space-y-2 max-w-3xl px-4">
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl text-foreground">
-            爱拓工具箱
+            xxw工具箱
           </h1>
           <p className="mx-auto max-w-175 text-muted-foreground text-base sm:text-lg">
             简约、高效的在线开发者工具集合。让繁琐的数据处理变得简单。

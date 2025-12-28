@@ -110,7 +110,7 @@ export default function JsonFormatterPage() {
 
   const loadExample = useCallback(() => {
     const example = {
-      name: "爱拓工具箱",
+      name: "xxw工具箱",
       version: "1.0.0",
       features: ["JSON格式化", "压缩", "验证"],
       config: {
